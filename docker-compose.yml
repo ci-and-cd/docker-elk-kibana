@@ -1,0 +1,42 @@
+
+version: '2.1'
+services:
+  kibana-develop:
+    container_name: kibana
+    environment:
+      SERVER_NAME: kibana # server.name, default: kibana
+      #SERVER_HOST: '"0"' server.host, default: "0"
+      ELASTICSEARCH_URL: http://elasticsearch-standalone:9200 # elasticsearch.url, default: http://elasticsearch:9200
+      #KIBANA_DEFAULTAPPID: # kibana.defaultAppId
+      #XPACK_MONITORING_ENABLED: false # xpack.monitoring.enabled
+      # The setting xpack.monitoring.ui.container.elasticsearch.enabled is not defined in the -oss image.
+      # xpack.monitoring.ui.container.elasticsearch.enabled, default: true
+    hostname: kibana
+    image: docker.elastic.co/kibana/kibana-oss:6.2.3
+    networks:
+      local-network:
+        ipv4_address: 172.16.238.63
+        ipv6_address: 2001:3984:3989::63
+    ports:
+    - 5601:5601
+    #volumes:
+    #- ./kibana.yml:/usr/share/kibana/config/kibana.yml
+
+networks:
+  local-network:
+    external: true
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+      - subnet: 2001:3984:3989::/64
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data
+      o: bind
