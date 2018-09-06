@@ -12,7 +12,7 @@ services:
       # The setting xpack.monitoring.ui.container.elasticsearch.enabled is not defined in the -oss image.
       # xpack.monitoring.ui.container.elasticsearch.enabled, default: true
     hostname: kibana
-    image: docker.elastic.co/kibana/kibana-oss:6.2.3
+    image: docker.elastic.co/kibana/kibana-oss:${IMAGE_TAG:-5.6.10} #6.2.3
     networks:
       local-network:
         ipv4_address: 172.16.238.63
