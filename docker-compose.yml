@@ -1,17 +1,16 @@
-
 version: '2.1'
 services:
   kibana-develop:
-    container_name: ${CONTAINER_HOST_NAME:-standalone.kibana}
+    container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
     environment:
-      SERVER_NAME: kibana # server.name, default: kibana
+      SERVER_NAME: ${SERVER_NAME:-kibana} # server.name, default: kibana
       #SERVER_HOST: '"0"' server.host, default: "0"
-      ELASTICSEARCH_URL: http://standalone.elasticsearch:9200 # elasticsearch.url, default: http://elasticsearch:9200
+      ELASTICSEARCH_URL: ${ELASTICSEARCH_URL:-http://standalone.elk-elasticsearch:9200} # elasticsearch.url, default: http://elasticsearch:9200
       #KIBANA_DEFAULTAPPID: # kibana.defaultAppId
       #XPACK_MONITORING_ENABLED: false # xpack.monitoring.enabled
       # The setting xpack.monitoring.ui.container.elasticsearch.enabled is not defined in the -oss image.
       # xpack.monitoring.ui.container.elasticsearch.enabled, default: true
-    hostname: ${CONTAINER_HOST_NAME:-standalone.kibana}
+    hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
     image: docker.elastic.co/kibana/kibana:${IMAGE_TAG:-5.6.10} #6.2.3
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
@@ -19,8 +18,8 @@ services:
       deploy.config.ref: ${LABEL_DEPLOY_CONFIG_REF:-unknown}
       deploy.util.commit: ${LABEL_DEPLOY_UTIL_COMMIT:-unknown}
       deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
-      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.kibana}
-      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/kibana/standalone}
+      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.elk-kibana}
+      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/elk-kibana/standalone}
     networks:
       local-network:
         ipv4_address: 172.16.238.63

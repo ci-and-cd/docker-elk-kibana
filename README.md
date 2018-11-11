@@ -6,3 +6,9 @@ Kibana (part of ELK stack)
 [Official Dockerfile on Github](https://github.com/elastic/kibana-docker)
 [Official Github](https://github.com/elastic/kibana)
 [Deprecated repo on Docker Hub](https://hub.docker.com/_/kibana/)
+
+
+Remove X-Pack from Kibana:
+```bash
+bin/kibana-plugin remove x-pack
+```
