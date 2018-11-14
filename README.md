@@ -10,5 +10,5 @@ Kibana (part of ELK stack)
 
 Remove X-Pack from Kibana:
 ```bash
-bin/kibana-plugin remove x-pack
+kibana-plugin remove x-pack
 ```

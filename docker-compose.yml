@@ -1,6 +1,12 @@
 version: '2.1'
 services:
-  kibana-develop:
+  develop-kibana:
+    build:
+      args:
+      - IMAGE_ARG_KIBANA_IMAGE_NAME=${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana}
+      - IMAGE_ARG_KIBANA_IMAGE_VERSION=${IMAGE_ARG_KIBANA_IMAGE_VERSION:-5.6.10}
+      context: .
+      dockerfile: Dockerfile
     container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
     environment:
       SERVER_NAME: ${SERVER_NAME:-kibana} # server.name, default: kibana
@@ -11,7 +17,7 @@ services:
       # The setting xpack.monitoring.ui.container.elasticsearch.enabled is not defined in the -oss image.
       # xpack.monitoring.ui.container.elasticsearch.enabled, default: true
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
-    image: docker.elastic.co/kibana/kibana:${IMAGE_TAG:-5.6.10} #6.2.3
+    image: cirepo/kibana:${IMAGE_TAG:-5.6.10} #6.2.3
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
