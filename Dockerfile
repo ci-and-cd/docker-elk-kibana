@@ -2,7 +2,7 @@
 ARG IMAGE_ARG_KIBANA_IMAGE_NAME
 ARG IMAGE_ARG_KIBANA_IMAGE_VERSION
 
-FROM docker.elastic.co/kibana/${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana}:${IMAGE_ARG_KIBANA_IMAGE_VERSION:-5.6.10} as base
+FROM docker.elastic.co/kibana/${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana-oss}:${IMAGE_ARG_KIBANA_IMAGE_VERSION:-7.4.0} as base
 
 FROM scratch
 
@@ -23,8 +23,10 @@ RUN set -ex \
 
 USER 1000
 
+# Unable to remove plugin because of error: "You are using the standard distribution of Kibana.
+# Please install the OSS-only distribution to remove X-Pack features."
 # Remove X-Pack.
-RUN set -ex \
-  && kibana-plugin remove x-pack
+#RUN set -ex \
+#  && kibana-plugin remove x-pack
 
 CMD ["/bin/bash", "/usr/local/bin/kibana-docker"]

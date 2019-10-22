@@ -3,21 +3,21 @@ services:
   develop-kibana:
     build:
       args:
-      - IMAGE_ARG_KIBANA_IMAGE_NAME=${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana}
-      - IMAGE_ARG_KIBANA_IMAGE_VERSION=${IMAGE_ARG_KIBANA_IMAGE_VERSION:-5.6.10}
+      - IMAGE_ARG_KIBANA_IMAGE_NAME=${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana-oss}
+      - IMAGE_ARG_KIBANA_IMAGE_VERSION=${IMAGE_ARG_KIBANA_IMAGE_VERSION:-7.4.0}
       context: .
       dockerfile: Dockerfile
     container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
     environment:
       SERVER_NAME: ${SERVER_NAME:-kibana} # server.name, default: kibana
       #SERVER_HOST: '"0"' server.host, default: "0"
-      ELASTICSEARCH_URL: ${ELASTICSEARCH_URL:-http://standalone.elk-elasticsearch:9200} # elasticsearch.url, default: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: ${ELASTICSEARCH_HOSTS:-http://172.16.238.62:9200} # elasticsearch.hosts, default: http://elasticsearch:9200
       #KIBANA_DEFAULTAPPID: # kibana.defaultAppId
       #XPACK_MONITORING_ENABLED: false # xpack.monitoring.enabled
       # The setting xpack.monitoring.ui.container.elasticsearch.enabled is not defined in the -oss image.
       # xpack.monitoring.ui.container.elasticsearch.enabled, default: true
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
-    image: cirepo/kibana:${IMAGE_TAG:-5.6.10} #6.2.3
+    image: cirepo/kibana:${IMAGE_TAG:-7.4.0} #6.2.3
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
@@ -39,13 +39,16 @@ services:
 networks:
   local-network:
     external: true
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
     driver: bridge
-    enable_ipv6: true
+    enable_ipv6: false
     ipam:
       driver: default
       config:
-      - subnet: 172.16.238.0/24
-      #- subnet: 2001:3984:3989::/64
+        - gateway: 172.16.238.1
+        - subnet: 172.16.238.0/24
+        #- subnet: 2001:3984:3989::/64
 
 volumes:
   data:
