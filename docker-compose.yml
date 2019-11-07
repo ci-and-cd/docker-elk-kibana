@@ -13,9 +13,15 @@ services:
       #SERVER_HOST: '"0"' server.host, default: "0"
       ELASTICSEARCH_HOSTS: ${ELASTICSEARCH_HOSTS:-http://172.16.238.62:9200} # elasticsearch.hosts, default: http://elasticsearch:9200
       #KIBANA_DEFAULTAPPID: # kibana.defaultAppId
-      #XPACK_MONITORING_ENABLED: false # xpack.monitoring.enabled
+      XPACK_GRAPH_ENABLED: ${XPACK_GRAPH_ENABLED:-false}
+      XPACK_ML_ENABLED: ${XPACK_ML_ENABLED:-false}
+      XPACK_MONITORING_ENABLED: ${XPACK_MONITORING_ENABLED:-false} # xpack.monitoring.enabled
       # The setting xpack.monitoring.ui.container.elasticsearch.enabled is not defined in the -oss image.
       # xpack.monitoring.ui.container.elasticsearch.enabled, default: true
+      XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: ${XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED:-false}
+      XPACK_REPORTING_ENABLED: ${XPACK_REPORTING_ENABLED:-false}
+      XPACK_SECURITY_ENABLED: ${XPACK_SECURITY_ENABLED:-false}
+      XPACK_SPACES_ENABLED: ${XPACK_SPACES_ENABLED:-false}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
     image: cirepo/kibana:${IMAGE_TAG:-7.4.0} #6.2.3
     labels:

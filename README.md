@@ -12,3 +12,29 @@ Remove X-Pack from Kibana:
 ```bash
 kibana-plugin remove x-pack
 ```
+
+```text
+PUT .kibana/_mapping/_doc?include_type_name=true
+{
+  "properties": {
+     "type": { 
+       "type":     "text",
+       "fielddata": true
+     }
+  }
+}
+# or
+PUT .kibana/_mapping/_doc?include_type_name=true
+{
+    "type": {
+        "type": "text",
+        "fielddata": true,
+        "fields": {
+            "keyword": {
+                "type": "keyword"
+            }
+        }
+    }
+}
+```
+
