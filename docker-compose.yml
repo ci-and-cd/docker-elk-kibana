@@ -3,7 +3,7 @@ services:
   develop-kibana:
     build:
       args:
-      - IMAGE_ARG_KIBANA_IMAGE_NAME=${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana-oss}
+      - IMAGE_ARG_KIBANA_IMAGE_NAME=${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana}
       - IMAGE_ARG_KIBANA_IMAGE_VERSION=${IMAGE_ARG_KIBANA_IMAGE_VERSION:-7.4.0}
       context: .
       dockerfile: Dockerfile
