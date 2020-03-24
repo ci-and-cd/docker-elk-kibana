@@ -4,7 +4,7 @@ services:
     build:
       args:
       - IMAGE_ARG_KIBANA_IMAGE_NAME=${IMAGE_ARG_KIBANA_IMAGE_NAME:-kibana}
-      - IMAGE_ARG_KIBANA_IMAGE_VERSION=${IMAGE_ARG_KIBANA_IMAGE_VERSION:-7.5.2}
+      - IMAGE_ARG_KIBANA_IMAGE_VERSION=${IMAGE_ARG_KIBANA_IMAGE_VERSION:-7.6.0}
       context: .
       dockerfile: Dockerfile
     container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
@@ -23,7 +23,7 @@ services:
       XPACK_SECURITY_ENABLED: ${XPACK_SECURITY_ENABLED:-false}
       XPACK_SPACES_ENABLED: ${XPACK_SPACES_ENABLED:-true}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-kibana
-    image: cirepo/kibana:${IMAGE_TAG:-7.5.2} #6.2.3
+    image: cirepo/kibana:${IMAGE_TAG:-7.6.0} #6.2.3
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
